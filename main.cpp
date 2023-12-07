@@ -1,5 +1,7 @@
 #include <iostream>
 #include <conio.h>
+#include<limits>
+
 using namespace std;
     int main(){
         int pilihan, admin;
@@ -7,7 +9,7 @@ using namespace std;
         int loginCounter=0;
         string namaMakanan[20];
         int hargaMakanan[20];
-        int menuPengelola;
+        int pilPengelola ;
 
         menuAwal:
         do{
@@ -15,7 +17,14 @@ using namespace std;
             cout<<"1.Pengelola"<<endl;
             cout<<"2.Pembeli"<<endl;
             cout<<"3.Exit"<<endl;
-            cin>>pilihan;
+            cout<<"Masukan Pilihan : ";
+            while(!(cin>>pilihan)){
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                cout << "Pilihan tidak valid" << endl;
+                goto menuAwal;
+            }
+//            cin>>pilihan;
 
             switch (pilihan){
                 case 1:
@@ -35,18 +44,31 @@ using namespace std;
                         }
                     }else {
                         system("cls");
-                        cout<<"Berhasil Login"<<endl;
+                        cout<<"Berhasil Login"<<endl << endl;
                     }
                     }while (username!=inputUsername || password!=inputPassword);
 
+                    menuPengelola:
                     do{
                         cout<<"=======Menu Pengelola========="<<endl;
                         cout<<"1.Tambah Menu"<<endl;
                         cout<<"2.Cari dan  Ubah Menu"<<endl;
                         cout<<"3.Hapus Menu"<<endl;
-                        cout<<"Log Out"<<endl;
-                        cin>>menuPengelola;
-                    }while (menuPengelola !=4);
+                        cout<<"4.Log Out"<<endl;
+                        cout<<"Masukan Pilihan : ";
+                        while(!(cin>>pilPengelola)){
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                            cout << "Pilihan tidak valid" << endl;
+                            goto menuPengelola;
+                        }
+
+                        switch(pilPengelola){
+                            case 1:
+                                break;
+
+                        }
+                    }while (pilPengelola !=4);
 
                     break;
                 case 2:
@@ -54,6 +76,8 @@ using namespace std;
                     break;
 
                 case 3:
+                    cout << "!! Menghentikan aplikasi akan menghapus semua data !!";
+
                     cout<<"Aplikasi Dihentikan"<<endl;
                     exit(1);
 
@@ -63,7 +87,6 @@ using namespace std;
             }
 
            }while (pilihan !=4);
-           getch();
 
          return 0;
         }
