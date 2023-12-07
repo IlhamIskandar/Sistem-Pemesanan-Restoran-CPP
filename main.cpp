@@ -5,11 +5,13 @@
 using namespace std;
     int main(){
         int pilihan, admin;
+
         string username="kelompok4", password="pemesananmenu", menu, inputUsername, inputPassword;
         int loginCounter=0;
-        string namaMakanan[20];
-        int hargaMakanan[20];
+
         int pilPengelola ;
+        string namaMakanan[20];
+        int jmlTambah, hargaMakanan[20];
 
         menuAwal:
         do{
@@ -51,9 +53,9 @@ using namespace std;
                     menuPengelola:
                     do{
                         cout<<"=======Menu Pengelola========="<<endl;
-                        cout<<"1.Tambah Menu"<<endl;
-                        cout<<"2.Cari dan  Ubah Menu"<<endl;
-                        cout<<"3.Hapus Menu"<<endl;
+                        cout<<"1.Tambah Menu Makanan"<<endl;
+                        cout<<"2.Cari dan  Ubah Menu Makanan"<<endl;
+                        cout<<"3.Hapus Menu Makanan"<<endl;
                         cout<<"4.Log Out"<<endl;
                         cout<<"Masukan Pilihan : ";
                         while(!(cin>>pilPengelola)){
@@ -65,6 +67,19 @@ using namespace std;
 
                         switch(pilPengelola){
                             case 1:
+                                cout << "Masukan jumlah menu yang akan ditambahkan"<<endl;
+                                cout << "Jumlah : ";
+                                while(!(cin>>jmlTambah)){
+                                    cin.clear();
+                                    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                    cout << "Jumlah tidak valid" << endl;
+                                }
+
+                                for(int i=0; i<jmlTambah; i++){
+                                    cout << "Masukan Nama Makanan : ";
+                                    cin >> namaMakanan[i];
+                                    cout << namaMakanan[i];
+                                }
                                 break;
 
                         }
