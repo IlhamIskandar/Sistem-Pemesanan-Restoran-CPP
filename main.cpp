@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
-#include<limits>
+#include <limits>
+#include <vector>
 
 using namespace std;
     int main(){
@@ -10,8 +11,8 @@ using namespace std;
         int loginCounter=0;
 
         int pilPengelola ;
-        string namaMakanan[20];
-        int jmlTambah, hargaMakanan[20];
+        string namaMenu[50];
+        int jmlTambah, hargaMenu[50], jmlMenu=0;
 
         menuAwal:
         do{
@@ -26,12 +27,12 @@ using namespace std;
                 cout << "Pilihan tidak valid" << endl;
                 goto menuAwal;
             }
-//            cin>>pilihan;
+            cout <<endl;
 
             switch (pilihan){
                 case 1:
                     do{
-                    cout<<"Silahkan Login Terlebih Dahulu"<<endl;
+                    cout<<"Silahkan Login Terlebih Dahulu!"<<endl;
                     cout<<"Username :";
                     cin>>inputUsername;
                     cout<<"Password :";
@@ -39,14 +40,15 @@ using namespace std;
                     cout << endl;
 
                     if (username!=inputUsername || password!=inputPassword){
-                        cout<<"Username atau Password Salah!"<<endl<<endl;
+                        cout<<"Username atau Password Salah! ["<<loginCounter+1<<"/3]"<<endl<<endl;
                         loginCounter++;
                         if(loginCounter==3){
+                            cout << "Kembali ke Menu Awal"<<endl<<endl;
                             goto menuAwal;
                         }
                     }else {
                         system("cls");
-                        cout<<"Berhasil Login"<<endl << endl;
+                        cout<<"Berhasil Login!"<<endl << endl;
                     }
                     }while (username!=inputUsername || password!=inputPassword);
 
@@ -54,17 +56,19 @@ using namespace std;
                     do{
                         cout<<"=======Menu Pengelola========="<<endl;
                         cout<<"1.Tambah Menu Makanan"<<endl;
-                        cout<<"2.Cari dan  Ubah Menu Makanan"<<endl;
+                        cout<<"2.Ubah Nama/Harga Menu Makanan"<<endl;
                         cout<<"3.Hapus Menu Makanan"<<endl;
-                        cout<<"4.Log Out"<<endl;
+                        cout<<"4.Tampilkan Menu Makanan"<<endl;
+                        cout<<"5.Log Out"<<endl;
                         cout<<"Masukan Pilihan : ";
                         while(!(cin>>pilPengelola)){
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(),'\n');
-                            cout << "Pilihan tidak valid" << endl;
+                            cout <<endl<< "Pilihan tidak valid!" << endl <<endl;
                             goto menuPengelola;
                         }
 
+                        cout<<endl;
                         switch(pilPengelola){
                             case 1:
                                 cout << "Masukan jumlah menu yang akan ditambahkan"<<endl;
@@ -75,15 +79,49 @@ using namespace std;
                                     cout << "Jumlah tidak valid" << endl;
                                 }
 
-                                for(int i=0; i<jmlTambah; i++){
-                                    cout << "Masukan Nama Makanan : ";
-                                    cin >> namaMakanan[i];
-                                    cout << namaMakanan[i];
-                                }
-                                break;
+                                cout <<endl;
 
+                                for(int i=1; i<=jmlTambah; i++){
+                                    cout << "Masukan Nama Menu : ";
+                                    getline(cin>>ws, namaMenu[i]);
+                                    cout<<"Masukan Harga Menu : ";
+                                    while(!(cin>>hargaMenu[i])){
+                                        cin.clear();
+                                        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                        cout << "Harga tidak valid!" << endl;
+                                        cout << "Masukan Ulang Harga : ";
+                                    }
+
+                                    cout <<endl;
+                                }
+
+                                jmlMenu += jmlTambah;
+                                system("cls");
+                                cout<<"Berhasil menambahkan menu!"<<endl;
+                                cout << "== Daftar Menu Makanan =="<<endl;
+                                for(int i=1; i<=jmlMenu; i++){
+                                    cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
+                                }
+                                cout <<endl;
+
+                                break;
+                            case 2: //ubah
+                                break;
+                            case 3 : //hapus
+                                break;
+                            case 4 : // tampilkan
+                                system("cls");
+                                cout << "== Daftar Menu Makanan =="<<endl;
+                                for(int i=1; i<=jmlMenu; i++){
+                                    cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
+                                }
+                                cout <<endl;
+                                break;
+                            default :
+                                cout<<"Pilihan Tidak Tersedia"<<endl;
+                                break;
                         }
-                    }while (pilPengelola !=4);
+                    }while (pilPengelola !=5);
 
                     break;
                 case 2:
@@ -91,7 +129,7 @@ using namespace std;
                     break;
 
                 case 3:
-                    cout << "!! Menghentikan aplikasi akan menghapus semua data !!";
+                    cout << "!! Menghentikan aplikasi akan menghapus semua data !!" <<endl;
 
                     cout<<"Aplikasi Dihentikan"<<endl;
                     exit(1);
