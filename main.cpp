@@ -7,11 +7,11 @@ using namespace std;
     int main(){
         int pilihan, admin;
 
-        // Login pengelola
+        // variable Login pengelola
         string username="1", password="1", menu, inputUsername, inputPassword;
         int loginCounter=0;
 
-        // Menu Pengelola
+        //  variable Fitur Pengelola
         int pilPengelola ;
         string namaMenu[50];
         int jmlTambah, hargaMenu[50], jmlMenu=0, pilHapus, pilUbah;
@@ -33,9 +33,10 @@ using namespace std;
             }
             cout <<endl;
 
-            // MENU AWAL
+            // PILIHAN MENU AWAL
             switch (pilihan){
                 case 1:
+                    // Input Login Pengelola
                     system("cls");
                     do{
                         cout<<"Silahkan Login Sebagai Pengelola!"<<endl;
@@ -60,6 +61,9 @@ using namespace std;
                             cout<<"Login Berhasil!"<<endl << endl;
                         }
                     }while (username!=inputUsername || password!=inputPassword);
+                    // Akhir Login Pengelola
+
+                    // Awal Menu Pengelola
                     menuPengelola:
                     do{
                         cout<<"=======Menu Pengelola========="<<endl;
@@ -79,6 +83,7 @@ using namespace std;
                         cout<<endl;
                         switch(pilPengelola){
                             case 1:
+                                // Awal Fitur Tambah Menu Makanan
                                 cout << "Masukan jumlah menu yang akan ditambahkan"<<endl;
                                 cout << "Masukan 0 untuk membatalkan"<<endl;
                                 cout << "Jumlah : ";
@@ -133,6 +138,7 @@ using namespace std;
                                     }
                                 }
                                 cout <<endl;
+                                // Akhir Fitur Tambah Menu Makanan
 
                                 break;
                             case 2: //ubah
@@ -296,6 +302,7 @@ using namespace std;
                         }
                     }while (pilPengelola !=5);
 
+                    // Akhir Menu Pengelola
                     break;
                 case 2:
                     cout<<"Silahkan Pilih Menu"<<endl;
