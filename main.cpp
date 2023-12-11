@@ -37,6 +37,7 @@ using namespace std;
             switch (pilihan){
                 case 1:
                     do{
+//                    system();
                     cout<<"Silahkan Login Terlebih Dahulu!"<<endl;
                     cout<<"Username :";
                     cin>>inputUsername;
@@ -48,9 +49,11 @@ using namespace std;
                         cout<<"Username atau Password Salah! ["<<loginCounter+1<<"/3]"<<endl<<endl;
                         loginCounter++;
                         if(loginCounter==3){
+
                             cout << "Kembali ke Menu Awal"<<endl<<endl;
                             goto menuAwal;
                         }
+
                     }else {
                         system("cls");
                         cout<<"Berhasil Login!"<<endl << endl;
@@ -145,8 +148,9 @@ using namespace std;
                                     for(int i=1; i<=jmlMenu; i++){
                                         cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
                                     }
+                                    cout<<endl;
                                     cout<<"Pilih menu yang akan diubah"<<endl;
-                                    cout<<"Pilih 0 untuk membatalkan"<<endl;
+                                    cout<<"Pilih 0 untuk kembali"<<endl;
                                     cout<<"Pilihan : ";
                                     while(!(cin>>pilUbah)){
                                         cin.clear();
@@ -155,9 +159,9 @@ using namespace std;
                                         cout<<"Pilih Ulang Menu"<<endl;
                                         cout <<"Pilihan : ";
                                     }
+                                    cout<<endl;
                                     if(pilUbah==0){
                                         system("cls");
-                                        cout<<"Hapus menu dibatalkan!"<<endl<<endl;
                                         goto menuPengelola;
                                     }else if(pilUbah>jmlMenu){
                                         system("cls");
@@ -170,6 +174,18 @@ using namespace std;
                                                 break;
                                             }
                                         }
+                                        cout<<"Masukan Nama Baru : ";
+                                        getline(cin>>ws, namaMenu[i]);
+                                        cout<<"Masukan Harga Baru : ";
+                                        while(!(cin>>hargaMenu[i])){
+                                            cin.clear();
+                                            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                            cout << "Harga tidak valid!" << endl;
+                                            cout << "Masukan Ulang Harga : ";
+                                        }
+                                        system("cls");
+                                        cout <<"Menu nomor "<<pilUbah<<" berhasil diubah!"<<endl<<endl;
+                                        goto menuUbah;
 
                                     }
                                 }
@@ -188,8 +204,9 @@ using namespace std;
                                     for(int i=1; i<=jmlMenu; i++){
                                         cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
                                     }
+                                    cout<<endl;
                                     cout<<"Pilih menu yang akan dihapus"<<endl;
-                                    cout<<"Pilih 0 untuk membatalkan"<<endl;
+                                    cout<<"Pilih 0 untuk kembali"<<endl;
                                     cout<<"Pilihan : ";
                                     while(!(cin>>pilHapus)){
                                         cin.clear();
@@ -200,7 +217,6 @@ using namespace std;
                                     }
                                     if(pilHapus==0){
                                         system("cls");
-                                        cout<<"Hapus menu dibatalkan!"<<endl<<endl;
                                         goto menuPengelola;
                                     }else if(pilHapus>jmlMenu){
                                         system("cls");
@@ -224,7 +240,7 @@ using namespace std;
                                 }
                                 system("cls");
                                 cout << "Berhasil menghapus data!"<<endl<<endl;
-                                goto menuTampilkan;
+                                goto menuHapus;
                                 break;
                             case 4 : // tampilkan
                                 system("cls");
