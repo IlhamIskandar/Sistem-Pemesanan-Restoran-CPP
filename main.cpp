@@ -28,7 +28,7 @@ using namespace std;
                 cin.clear();// buat ngeclear error, kalo ada error, erornya gak dianggap
                 cin.ignore(numeric_limits<streamsize>::max(),'\n');//buat nge ignore/skip baris inputan
                 system("cls"); // buat nge clear/kosongin command prompt
-                cout << "Pilihan tidak valid" << endl<<endl;
+                cout << "Pilihan tidak valid!" << endl<<endl;
                 goto menuAwal;
             }
             cout <<endl;
@@ -36,29 +36,29 @@ using namespace std;
             // MENU AWAL
             switch (pilihan){
                 case 1:
+                    system("cls");
                     do{
-//                    system();
-                    cout<<"Silahkan Login Terlebih Dahulu!"<<endl;
-                    cout<<"Username :";
-                    cin>>inputUsername;
-                    cout<<"Password :";
-                    cin>>inputPassword;
-                    cout << endl;
+                        cout<<"Silahkan Login Sebagai Pengelola!"<<endl;
+                        cout<<"Username :";
+                        cin>>inputUsername;
+                        cout<<"Password :";
+                        cin>>inputPassword;
+                        cout << endl;
 
-                    if (username!=inputUsername || password!=inputPassword){
-                        cout<<"Username atau Password Salah! ["<<loginCounter+1<<"/3]"<<endl<<endl;
-                        loginCounter++;
-                        if(loginCounter==3){
+                        if (username!=inputUsername || password!=inputPassword){
+                            cout<<"Username atau Password Salah! ["<<loginCounter+1<<"/3]"<<endl<<endl;
+                            loginCounter++;
+                            if(loginCounter==3){
+                                system("cls");
+                                cout<<"Login gagal!"<<endl;
+                                cout << "Kembali ke Menu Awal"<<endl<<endl;
+                                goto menuAwal;
+                            }
 
-                            cout << "Kembali ke Menu Awal"<<endl<<endl;
-                            goto menuAwal;
+                        }else {
+                            system("cls");
+                            cout<<"Login Berhasil!"<<endl << endl;
                         }
-
-                    }else {
-                        system("cls");
-                        cout<<"Berhasil Login!"<<endl << endl;
-                    }
-
                     }while (username!=inputUsername || password!=inputPassword);
                     menuPengelola:
                     do{
