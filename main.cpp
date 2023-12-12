@@ -1,6 +1,7 @@
 #include <iostream>
 #include <conio.h>
 #include <limits>
+#include <iomanip>
 //#include <vector>
 
 using namespace std;
@@ -132,10 +133,14 @@ using namespace std;
                                     cout<<"Tambah menu dibatalkan!"<<endl;
                                 }else{
                                     cout<<"Berhasil menambahkan menu!"<<endl;
-                                    cout << "== Daftar Menu Makanan =="<<endl;
+                                    cout << "Daftar Menu Makanan "<<endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                                    cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     for(int i=1; i<=jmlMenu; i++){
-                                        cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
+                                        cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                 }
                                 cout <<endl;
                                 // Akhir Fitur Tambah Menu Makanan
@@ -146,14 +151,18 @@ using namespace std;
                                 menuUbah:
                                 if(jmlMenu==0){
                                     system("cls");
-                                    cout << "== Daftar Menu Makanan =="<<endl;
+                                    cout << "Daftar Menu Makanan"<<endl;
                                     cout<<"Menu masih kosong!"<<endl<<endl;
                                     goto menuPengelola;
                                 }else{
-                                    cout << "== Daftar Menu Makanan =="<<endl;
+                                    cout << "Daftar Menu Makanan"<<endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                                    cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     for(int i=1; i<=jmlMenu; i++){
-                                        cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
+                                        cout<<"| "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     cout<<endl;
                                     cout<<"Pilih menu yang akan diubah"<<endl;
                                     cout<<"Pilih 0 untuk kembali"<<endl;
@@ -202,14 +211,18 @@ using namespace std;
                                 menuHapus:
                                 if(jmlMenu==0){
                                     system("cls");
-                                    cout << "== Daftar Menu Makanan =="<<endl;
+                                    cout << "Daftar Menu Makanan"<<endl;
                                     cout<<"Menu masih kosong!"<<endl<<endl;
                                 goto menuPengelola;
                                 }else{
-                                    cout << "== Daftar Menu Makanan =="<<endl;
+                                    cout << "Daftar Menu Makanan"<<endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                                    cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     for(int i=1; i<=jmlMenu; i++){
-                                        cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
+                                        cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     cout<<endl;
                                     cout<<"Pilih menu yang akan dihapus"<<endl;
                                     cout<<"Pilih 0 untuk kembali"<<endl;
@@ -251,14 +264,19 @@ using namespace std;
                             case 4 : // tampilkan
                                 system("cls");
                                 menuTampilkan:
-                                cout << "== Daftar Menu Makanan =="<<endl;
+                                cout << "Jumlah Menu : " << jmlMenu << endl;
+
                                 if(jmlMenu==0){
                                     cout<<"Menu masih kosong!"<<endl;
                                 }else{
-                                    cout << "Jumlah Menu : " << jmlMenu << endl;
+                                    cout << "Daftar Menu Makanan "<<endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                                    cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     for(int i=1; i<=jmlMenu; i++){
-                                        cout << i<<". "<< namaMenu[i]<< " (Rp. "<<hargaMenu[i]<<")"<<endl;
+                                        cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
+                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                 }
                                 cout <<endl;
                                 break;
