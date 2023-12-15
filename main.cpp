@@ -2,7 +2,6 @@
 #include <conio.h>
 #include <limits>
 #include <iomanip>
-//#include <vector>
 
 using namespace std;
     int main(){
@@ -14,8 +13,15 @@ using namespace std;
 
         //  variable Fitur Pengelola
         int pilPengelola ;
+        int jmlTambah,  jmlMenu=0, pilHapus, pilUbah;
+
+        // variable data menu makanan
         string namaMenu[50];
-        int jmlTambah, hargaMenu[50], jmlMenu=0, pilHapus, pilUbah;
+        int hargaMenu[50];
+
+        //variable menu pembelian
+        int pilPembeli, pilMakan, jmlPembelian;
+        char konf;
 
         menuAwal:
         do{
@@ -177,6 +183,7 @@ using namespace std;
                                     cout<<endl;
                                     if(pilUbah==0){
                                         system("cls");
+                                        cout<<"Ubah menu dibatalkan!"<<endl<<endl;
                                         goto menuPengelola;
                                     }else if(pilUbah>jmlMenu || pilUbah<0){
                                         system("cls");
@@ -236,6 +243,7 @@ using namespace std;
                                     }
                                     if(pilHapus==0){
                                         system("cls");
+                                        cout<<"Hapus menu dibatalkan!"<<endl<<endl;
                                         goto menuPengelola;
                                     }else if(pilHapus>jmlMenu || pilHapus<0){
                                         system("cls");
@@ -325,7 +333,116 @@ using namespace std;
                     break;
                 case 2:
                     // Awal Menu Pembelian
-                    cout<<"Silahkan Pilih Menu"<<endl;
+
+                    system("cls");
+                    menuPembeli:
+                    do{
+                        cout<<setw(17)<<""<<"> Menu Makanan <"<<endl;
+                        cout << setfill('=') << setw(50) << "" << setfill(' ') << endl;
+                        cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
+                        cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                        if(jmlMenu==0){
+
+                            cout<<setw(16)<<""<<"Menu Masih Kosong!"<<setw(20)<<""<<endl;
+                        }else{
+                            for(int i=1; i<=jmlMenu; i++){
+                                cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
+                            }
+                        }
+                        cout << setfill('=') << setw(50) << "" << setfill(' ') << endl<<endl;
+
+                        cout <<"1. Beli Makanan"<<endl;
+                        cout <<"2. Kembali ke Menu Awal"<<endl;
+                        cout <<"Pilihan :";
+                        if(!(cin>>pilPembeli)){
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                            system("cls");
+                            cout<<"Pilihan tidak valid!"<<endl<<endl;
+                            goto menuPembeli;
+                        }
+
+                        cout<<endl;
+                        switch(pilPembeli){
+                        case 1:
+                            if(jmlMenu==0){
+                                system("cls");
+                                cout<<"Menu Masih Kosong!"<<endl<<endl;
+                                break;
+                            }else{
+                                cout<<"Pilih Nomor Menu Makanan"<<endl;
+                                cout<<"Pilih 0 untuk membatalkan"<<endl;
+                                cout<<"Pilihan : ";
+                                while(!(cin>>pilMakan) || pilMakan<0 || pilMakan>jmlMenu){
+                                    cin.clear();
+                                    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                                    cout<<"Menu Tidak Ditemukan"<<endl<<endl;
+                                    cout<<"Pilih Ulang Nomor Menu Makanan"<<endl;
+                                    cout<<"Pilih 0 untuk membatalkan"<<endl;
+                                    cout<<"Pilihan : ";
+                                }
+
+                                if(pilMakan==0){
+                                    system("cls");
+                                    cout<<"Pembelian dibatalkan!"<<endl<<endl;
+                                    goto menuPembeli;
+                                }else{
+
+                                    cout <<"Masukan Jumlah Pembelian"<<endl;
+                                    cout << "Jumlah : ";
+                                    while(!(cin>>jmlPembelian) || jmlPembelian < 0){
+                                        cin.clear();
+                                        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                        cout << "Jumlah tidak valid!" << endl<<endl;
+                                        cout << "Masukan Ulang Jumlah Pembelian" << endl;
+                                        cout << "Jumlah : ";
+                                    }
+
+                                    cout <<endl;
+
+                                    konfPembelian:
+
+                                    cout <<"Beli "<<namaMenu[pilMakan]<< " sebanyak "<< jmlPembelian<<" buah"<<endl;
+                                    cout <<"Total harga : Rp. "<<hargaMenu[pilMakan]*jmlPembelian<<endl;
+                                    cout <<"konfirmasi pembelian? (y/n)"<<endl;
+                                    cout <<"Jawaban : ";
+                                    if(!(cin>>konf)){
+                                        cin.clear();
+                                        cin.ignore(numeric_limits<char>::max(), '\n');
+                                        cout<<"Jawaban tidak valid!"<<endl<<endl;
+                                        cout<<"Konfirmasi Ulang"<<endl;
+                                        goto konfPembelian;
+                                    }
+
+                                    switch(konf){
+                                        case 'y':
+        //                                       pembelianMenu[pilMenu] += jmlPembelian;
+                                            system("cls");
+                                            cout << "Pembelian "<<namaMenu[pilMakan]<< " sebanyak "<< jmlPembelian<<" dengan harga Rp. "<<hargaMenu[pilMakan]*jmlPembelian<< " Berhasil!"<<endl<<endl;
+                                            break;
+                                        case 'n':
+                                            system("cls");
+                                            cout <<"Pembelian dibatalkan!"<<endl<<endl;
+                                            break;
+                                        default:
+                                            cout<<"Jawaban tidak valid!"<<endl<<endl;
+                                            cout<<"Konfirmasi Ulang"<<endl;
+                                            goto konfPembelian;
+                                            break;
+                                    }
+                                }
+                            }
+                            break;
+                        case 2:
+                            system("cls");
+                            cout<<"Kembali ke Menu Awal"<<endl<<endl;
+                            break;
+                        default:
+                            system("cls");
+                            cout<<"Pilihan tidak valid!"<<endl<<endl;
+                        break;
+                        }
+                    }while(pilPembeli!=2);
 
                     break;
                     // Akhir Menu Pembelian
