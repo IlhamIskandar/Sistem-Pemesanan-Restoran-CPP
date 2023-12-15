@@ -13,15 +13,20 @@ using namespace std;
 
         //  variable Fitur Pengelola
         int pilPengelola ;
-        int jmlTambah,  jmlMenu=0, pilHapus, pilUbah;
+        int jmlTambah,  jmlMenu=0, maxMenu=20, pilHapus, pilUbah;
+
 
         // variable data menu makanan
-        string namaMenu[50];
-        int hargaMenu[50];
+        string namaMenu[(maxMenu+1)];
+        int hargaMenu[maxMenu+1];
 
         //variable menu pembelian
         int pilPembeli, pilMakan, jmlPembelian;
         char konf;
+
+        // riwayat pembelian
+        string namaRiw[100];
+        int hargaRiw[100], jmlRiw=0;
 
         menuAwal:
         do{
@@ -73,8 +78,8 @@ using namespace std;
                     // Awal Menu Pengelola
                     menuPengelola:
                     do{
-                        cout<<"=======Menu Pengelola========="<<endl;
-                        cout<<"1.Tambah Menu Makanan"<<endl;
+                        cout<<"======= Menu Pengelola ========="<<endl;
+                        cout<<"1.Tambah Menu Makanan (Maks."<<maxMenu<<", ["<<jmlMenu<<"/"<<maxMenu<<"])"<<endl;
                         cout<<"2.Ubah Nama/Harga Menu Makanan"<<endl;
                         cout<<"3.Hapus Menu Makanan"<<endl;
                         cout<<"4.Tampilkan Menu Makanan"<<endl;
@@ -91,70 +96,83 @@ using namespace std;
                         switch(pilPengelola){
                             case 1:
                                 // Awal Fitur Tambah Menu Makanan
-                                cout << "Masukan jumlah menu yang akan ditambahkan"<<endl;
-                                cout << "Masukan 0 untuk membatalkan"<<endl;
-                                cout << "Jumlah : ";
-                                while(!(cin>>jmlTambah) || jmlTambah < 0){
-                                    cin.clear();
-                                    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                if (jmlMenu==maxMenu){
                                     system("cls");
-                                    cout << "Jumlah tidak valid!" << endl;
-                                    cout << "Tambah menu dibatalkan!" << endl <<endl;
-                                    goto menuPengelola;
-                                }
-
-                                cout <<endl;
-
-                                if(jmlMenu==0){
-                                    for(int i=1; i<=jmlTambah; i++){
-                                        cout << "Masukan Nama Menu : ";
-                                        getline(cin>>ws, namaMenu[i]);
-                                        cout<<"Masukan Harga Menu : ";
-                                        while(!(cin>>hargaMenu[i]) || hargaMenu[i]<0){
-                                            cin.clear();
-                                            cin.ignore(numeric_limits<streamsize>::max(),'\n');
-                                            cout << "Harga tidak valid!" << endl;
-                                            cout << "Masukan Ulang Harga : ";
-                                        }
-                                        cout <<endl;
-                                    }
+                                    cout <<"Jumlah Menu Sudah Maksimal ("<<jmlMenu<<"/"<<maxMenu<<")"<<endl;
+                                    cout <<"Tidak Dapat Menambah Menu Lain!"<<endl<<endl;
+                                    break;
                                 }else{
-                                    for(int i=jmlMenu+1; i<=(jmlMenu+jmlTambah); i++){
-                                        cout << "Masukan Nama Menu : ";
-                                        getline(cin>>ws, namaMenu[i]);
-                                        cout<<"Masukan Harga Menu : ";
-                                        while(!(cin>>hargaMenu[i]) || hargaMenu[i]<0){
-                                            cin.clear();
-                                            cin.ignore(numeric_limits<streamsize>::max(),'\n');
-                                            cout << "Harga tidak valid!" << endl;
-                                            cout << "Masukan Ulang Harga : ";
+                                    cout << "Masukan jumlah menu yang akan ditambahkan"<<endl;
+                                    cout << "Masukan 0 untuk membatalkan"<<endl;
+                                    cout << "Jumlah : ";
+                                    while(!(cin>>jmlTambah) || jmlTambah < 0){
+                                        cin.clear();
+                                        cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                        system("cls");
+                                        cout << "Jumlah tidak valid!" << endl;
+                                        cout << "Tambah menu dibatalkan!" << endl <<endl;
+                                        goto menuPengelola;
+                                    }
+                                    cout <<endl;
+                                    if(jmlMenu+jmlTambah>maxMenu){
+                                        system("cls");
+                                        cout<<"Jumlah menu tidak boleh melebihi "<<maxMenu<<"! ("<<jmlMenu<<"/"<<maxMenu<<")"<<endl;
+                                        cout<<"Tambah menu dibatalkan!"<<endl<<endl;
+                                        break;
+                                    }else{
+                                        if(jmlMenu==0){
+                                            for(int i=1; i<=jmlTambah; i++){
+                                                cout << "Masukan Nama Menu : ";
+                                                getline(cin>>ws, namaMenu[i]);
+                                                cout<<"Masukan Harga Menu : ";
+                                                while(!(cin>>hargaMenu[i]) || hargaMenu[i]<0){
+                                                    cin.clear();
+                                                    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                                    cout << "Harga tidak valid!" << endl;
+                                                    cout << "Masukan Ulang Harga : ";
+                                                }
+                                                cout <<endl;
+                                            }
+                                        }else{
+                                            for(int i=jmlMenu+1; i<=(jmlMenu+jmlTambah); i++){
+                                                cout << "Masukan Nama Menu : ";
+                                                getline(cin>>ws, namaMenu[i]);
+                                                cout<<"Masukan Harga Menu : ";
+                                                while(!(cin>>hargaMenu[i]) || hargaMenu[i]<0){
+                                                    cin.clear();
+                                                    cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                                    cout << "Harga tidak valid!" << endl;
+                                                    cout << "Masukan Ulang Harga : ";
+                                                }
+                                                cout <<endl;
+                                            }
                                         }
-                                        cout <<endl;
                                     }
-                                }
 
-                                jmlMenu += jmlTambah;
-                                system("cls");
-                                if(jmlTambah==0){
-                                    cout<<"Tambah menu dibatalkan!"<<endl;
-                                }else{
-                                    cout<<"Berhasil menambahkan menu!"<<endl;
-                                    cout << "Daftar Menu Makanan "<<endl;
-                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
-                                    cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
-                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
-                                    for(int i=1; i<=jmlMenu; i++){
-                                        cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
+                                    jmlMenu += jmlTambah;
+                                    system("cls");
+                                    if(jmlTambah==0){
+                                        cout<<"Tambah menu dibatalkan!"<<endl;
+                                    }else{
+                                        cout<<"Berhasil menambahkan menu!"<<endl;
+                                        cout << "Daftar Menu Makanan "<<endl;
+                                        cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                                        cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
+                                        cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                                        for(int i=1; i<=jmlMenu; i++){
+                                            cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
+                                        }
+                                        cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     }
-                                    cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
+                                    cout <<endl;
                                 }
-                                cout <<endl;
                                 // Akhir Fitur Tambah Menu Makanan
 
                                 break;
                             case 2: //ubah
                                 system("cls");
                                 menuUbah:
+                                cout << "Jumlah Menu : ("<<jmlMenu<<"/"<<maxMenu<<")"<< endl;
                                 if(jmlMenu==0){
                                     system("cls");
                                     cout << "Daftar Menu Makanan"<<endl;
@@ -199,7 +217,7 @@ using namespace std;
                                         cout<<"Masukan Nama Baru : ";
                                         getline(cin>>ws, namaMenu[i]);
                                         cout<<"Masukan Harga Baru : ";
-                                        while(!(cin>>hargaMenu[i])){
+                                        while(!(cin>>hargaMenu[i]) || hargaMenu[i]<0){
                                             cin.clear();
                                             cin.ignore(numeric_limits<streamsize>::max(),'\n');
                                             cout << "Harga tidak valid!" << endl;
@@ -216,6 +234,7 @@ using namespace std;
                             case 3 : //hapus
                                 system("cls");
                                 menuHapus:
+                                cout << "Jumlah Menu : ("<<jmlMenu<<"/"<<maxMenu<<")"<< endl;
                                 if(jmlMenu==0){
                                     system("cls");
                                     cout << "Daftar Menu Makanan"<<endl;
@@ -272,7 +291,7 @@ using namespace std;
                             case 4 : // tampilkan
                                 system("cls");
                                 menuTampilkan:
-                                cout << "Jumlah Menu : " << jmlMenu << endl;
+                                cout << "Jumlah Menu : ("<<jmlMenu<<"/"<<maxMenu<<")"<< endl;
 
                                 if(jmlMenu==0){
                                     cout<<"Menu masih kosong!"<<endl;
