@@ -594,7 +594,6 @@ using namespace std;
 
                                             switch(konf){
                                                 case 'y':
-
                                                     if (jmlLap==0){
                                                         for(int i=0; i<menuPesanan;i++){
                                                             lapNama[i]=namaPesanan[i];
