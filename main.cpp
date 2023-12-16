@@ -6,6 +6,7 @@
 using namespace std;
     int main(){
         int pilihan, admin;
+        string konfirmasiExit;
 
         // variable Login pengelola
         string username="1", password="1", menu, inputUsername, inputPassword;
@@ -671,16 +672,29 @@ using namespace std;
                     // Akhir Menu Pembelian
 
                 case 3:
-                    cout << "!! Menghentikan aplikasi akan menghapus semua data !!" <<endl;
+                    cout<< "! PERINGATAN !"<<endl<<endl;
+                    cout<<"Menghentikan aplikasi akan menghapus semua data!" <<endl;
+                    cout<<"Ketik ulang \"HENTIKAN APLIKASI\" untuk menghentikan aplikasi"<<endl;
+                    cout<<"Ketik apapun untuk membatalkan"<<endl;
+                    cout<<"Jawaban: ";
+                    getline(cin>>ws,konfirmasiExit);
+                    cout<<endl;
+                    if(konfirmasiExit=="HENTIKAN APLIKASI"){
+                        cout<<"Aplikasi Dihentikan"<<endl<<endl;
+                        exit(1);
 
-                    cout<<"Aplikasi Dihentikan"<<endl;
-                    exit(1);
+                    }else{
+                        system("cls");
+                        cout<<"Penghentian Aplikasi Dibatalkan"<<endl<<endl;
+                        break;
+                    }
+
                 default:
                     system("cls");
                     cout<<"Pilihan tidak tersedia!"<<endl<<endl;
                     break;
             }
-           }while (pilihan !=3);
+           }while (konfirmasiExit!="HENTIKAN APLIKASI");
             // END MENU AWAL
          return 0;
         }
