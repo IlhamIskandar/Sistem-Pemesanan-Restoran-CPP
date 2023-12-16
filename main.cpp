@@ -23,17 +23,17 @@ using namespace std;
         //variable menu pembelian
         int pilPembeli, pilMakan, jmlPembelian;
         int pilPesanan;
-        int jmlPesanan[maxMenu], hargaPesanan[maxMenu], menuPesanan=0;
+        int jmlPesanan[maxMenu], hargaPesanan[maxMenu], menuPesanan=0, totalHarga=0;
         string namaPesanan[maxMenu];
         char konf, konfBatal;
 
         // laporan pembelian
         string lapNama[100];
-        int lapHarga[100],lapTotal[100], jmlLap=0;
+        int lapHarga[100],lapTotal[100], jmlLap=0, totalKeuntungan=0;
 
         menuAwal:
         do{
-            cout<<"=======Pilih Pengguna=======\n";
+            cout<<"======= Menu Awal =======\n";
             cout<<"1.Pengelola"<<endl;
             cout<<"2.Pembeli"<<endl;
             cout<<"3.Exit"<<endl;
@@ -88,12 +88,14 @@ using namespace std;
                         cout<<"2.Ubah Nama/Harga Menu Makanan"<<endl;
                         cout<<"3.Hapus Menu Makanan"<<endl;
                         cout<<"4.Tampilkan Menu Makanan"<<endl;
-                        cout<<"5.Log Out"<<endl;
+                        cout<<"5.Tampilkan Laporan Pembelian"<<endl;
+                        cout<<"6.Log Out"<<endl;
                         cout<<"Masukan Pilihan : ";
                         while(!(cin>>pilPengelola)){
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(),'\n');
-                            cout <<endl<< "Pilihan tidak valid!" << endl <<endl;
+                            system("cls");
+                            cout <<"Pilihan tidak valid!" << endl <<endl;
                             goto menuPengelola;
                         }
 
@@ -189,11 +191,11 @@ using namespace std;
                                     cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     for(int i=1; i<=jmlMenu; i++){
-                                        cout<<"| "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
+                                        cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     cout<<endl;
-                                    cout<<"Pilih menu yang akan diubah"<<endl;
+                                    cout<<"Pilih nomor menu yang akan diubah"<<endl;
                                     cout<<"Pilih 0 untuk kembali"<<endl;
                                     cout<<"Pilihan : ";
                                     while(!(cin>>pilUbah)){
@@ -255,7 +257,7 @@ using namespace std;
                                     }
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     cout<<endl;
-                                    cout<<"Pilih menu yang akan dihapus"<<endl;
+                                    cout<<"Pilih nomor menu yang akan dihapus"<<endl;
                                     cout<<"Pilih 0 untuk kembali"<<endl;
                                     cout<<"Pilihan : ";
                                     while(!(cin>>pilHapus)){
@@ -280,8 +282,9 @@ using namespace std;
                                                 break;
                                             }
                                         }
+
                                         if(i<=jmlMenu){
-                                            for(int j=i; j<=jmlMenu; j++){
+                                            for(int j=i; j<jmlMenu; j++){
                                                 namaMenu[j]= namaMenu[j+1];
                                                 hargaMenu[j]= hargaMenu[j+1];
                                             }
@@ -312,7 +315,33 @@ using namespace std;
                                 }
                                 cout <<endl;
                                 break;
-                            case 5:
+                            case 5:// Laporan /riwayat pembelian
+                                system("cls");
+                                menuLaporan:
+                                totalKeuntungan=0;
+                                    if(jmlLap==0){
+                                        system("cls");
+                                        cout<<"Laporan masih Kosong!"<<endl<<endl;
+                                        break;
+                                    }else{
+                                        for(int i=0; i<jmlLap;i++){
+                                            totalKeuntungan+=(lapHarga[i]*lapTotal[i]);
+                                        }
+                                        cout<<setw(16)<<""<<"- Laporan Pembelian -"<<endl;
+                                        cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
+                                        cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(12) << "Harga"<<"| "<< left << setw(10) << "Jumlah "<< endl;
+                                        cout << setfill('-') << setw(60) << "" << setfill(' ') << endl;
+                                        for(int i=0;i<jmlLap;i++){
+                                            cout<<" "<<left<< setw(3) << i+1<<"| "<<left<< setw(30)<< lapNama[i]<< "| Rp. "<<setw(8)<< lapHarga[i]<<"| "<<left<<setw(10)<<lapTotal[i]<<endl;
+                                        }
+                                        cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
+                                        cout <<" Total Keuntungan :"<<right<<setw(36)<<"Rp. "<< totalKeuntungan<<endl;
+                                        cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
+                                    }
+                                    cout<<endl;
+
+                                break;
+                            case 6:
                                 char logout;
                                 cout <<"Yakin akan logout? (y/n)"<<endl;
                                 cout <<"Jawaban : ";
@@ -351,7 +380,7 @@ using namespace std;
                                 cout<<"Pilihan Tidak Tersedia"<<endl<<endl;
                                 break;
                         }
-                    }while (pilPengelola !=5);
+                    }while (pilPengelola !=6);
 
                     // Akhir Menu Pengelola
                     break;
@@ -417,13 +446,19 @@ using namespace std;
                                     if(menuPesanan==0){
                                         cout<<setw(15)<<""<<"Pesanan Masih Kosong!"<<setw(20)<<""<<endl;
                                     }else{
-                                        cout << setfill('=') << setw(50) << "" << setfill(' ') << endl;
-                                        cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
-                                        cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
-                                        for(int i=0;i<menuPesanan;i++){
-                                            cout<<" "<<left<< setw(3) << i+1<<"| "<<left<< setw(30)<< namaPesanan[i]<< "| Rp. "<< hargaPesanan[i]<<" ("<<jmlPesanan[i]<<")"<<endl;
+                                        totalHarga=0;
+                                        for(int i=0; i<menuPesanan;i++){
+                                            totalHarga+=(hargaPesanan[i]*jmlPesanan[i]);
                                         }
-                                        cout << setfill('=') << setw(50) << "" << setfill(' ') << endl;
+                                        cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
+                                        cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(12) << "Harga"<<"| "<< left << setw(10) << "Jumlah "<< endl;
+                                        cout << setfill('-') << setw(60) << "" << setfill(' ') << endl;
+                                        for(int i=0;i<menuPesanan;i++){
+                                            cout<<" "<<left<< setw(3) << i+1<<"| "<<left<< setw(30)<< namaPesanan[i]<< "| Rp. "<<setw(8)<< hargaPesanan[i]<<"| "<<left<<setw(10)<<jmlPesanan[i]<<endl;
+                                        }
+                                        cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
+                                        cout <<" Total Harga :"<<right<<setw(36)<<"Rp. "<< totalHarga<<endl;
+                                        cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
                                     }
                                     cout<<endl;
                                     cout<<"1. Tambah Pesanan"<<endl;
@@ -433,6 +468,7 @@ using namespace std;
                                     if(!(cin>>pilPesanan)){
                                         cin.clear();
                                         cin.ignore(numeric_limits<streamsize>::max(),'\n');
+                                        system("cls");
                                         cout <<endl<< "Pilihan tidak valid!" << endl <<endl;
                                         goto awalPesan;
                                     }
@@ -470,6 +506,7 @@ using namespace std;
                                                 namaPesanan[menuPesanan]=namaMenu[pilMakan];
                                                 hargaPesanan[menuPesanan]=hargaMenu[pilMakan];
                                                 jmlPesanan[menuPesanan]=jmlPembelian;
+                                                //totalHarga+=(hargaPesanan[pilMakan]*jmlPembelian);
                                                 menuPesanan++;
 
                                             }else{
@@ -477,6 +514,7 @@ using namespace std;
                                                 for( i=0;i<menuPesanan;i++){
                                                     if(namaPesanan[i]==namaMenu[pilMakan] && hargaPesanan[i]==hargaMenu[pilMakan]){
                                                         jmlPesanan[i]+=jmlPembelian;
+                                                        //totalHarga+=(hargaPesanan[i]*jmlPembelian);
                                                         break;
                                                     }
                                                 }
@@ -487,14 +525,10 @@ using namespace std;
                                                     menuPesanan++;
                                                 }
                                             }
-
-
-
                                             system("cls");
                                             cout<<"Berhasil menambahkan pesanan!"<<endl;
                                             cout <<endl;
                                             goto awalPesan;
-
                                         }
 
                                         break;
@@ -516,8 +550,8 @@ using namespace std;
                                                 namaPesanan[i]="";
                                                 hargaPesanan[i]=NULL;
                                                 jmlPesanan[i]=NULL;
-                                                menuPesanan=0;
                                             }
+                                            menuPesanan=0;
 
                                             system("cls");
                                             cout<<"Pesanan Dibatalkan!"<<endl<<endl;
@@ -540,6 +574,11 @@ using namespace std;
                                         break;
                                     case 3:// konfirmasi pesanan
                                         konfPembelian :
+                                        if(menuPesanan==0){
+                                            system("cls");
+                                            cout<<"Belum menambahkan pesanan!"<<endl<<endl;
+                                            break;
+                                        }
                                         do{
 
                                             cout <<"konfirmasi pembelian? (y/n)"<<endl;
@@ -556,36 +595,45 @@ using namespace std;
                                                 case 'y':
 
                                                     if (jmlLap==0){
-                                                        for(i=0; i<menuPesanan;i++){
+                                                        for(int i=0; i<menuPesanan;i++){
                                                             lapNama[i]=namaPesanan[i];
-                                                            lapHarga[i]=harPesanan[i];
-                                                            lapTotal[i]=namaPesanan[i];
-                                                            jmlLap=menuPesanan;
+                                                            lapHarga[i]=hargaPesanan[i];
+                                                            lapTotal[i]=jmlPesanan[i];
+                                                            jmlLap++;
                                                         }
                                                     }else{
-                                                        for(int i=0; i<menuPesanan;i++){
-                                                            for(int j=jmlLap; j<menuPesanan){
-                                                                lapNama[i]=namaPesanan[i];
-                                                                lapHarga[i]=harPesanan[i];
-                                                                lapTotal[i]=namaPesanan[i];
+                                                        int i;
+                                                        int j;
+                                                        for( i=0;i<menuPesanan;i++){
+                                                                for(j=0;j<jmlLap;j++){
+                                                                    if(namaPesanan[i]==lapNama[j] && hargaPesanan[i]==lapHarga[j]){
+                                                                        lapTotal[j]+=jmlPesanan[i];
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            if(j<jmlLap){
+                                                                continue;
+                                                            }
+                                                            //cout<<"sebelum if i"<<i<<" j"<<j<<" jl"<<jmlLap<<endl;
+                                                            if(j==jmlLap){
+                                                                lapNama[jmlLap]=namaPesanan[i];
+                                                                lapHarga[jmlLap]=hargaPesanan[i];
+                                                                lapTotal[jmlLap]=jmlPesanan[i];
                                                                 jmlLap++;
                                                             }
                                                         }
-                                                        for(int i=jmlLap; i<100; i++){
-                                                            for(int j=0; j>menuPesanan;j++){
-                                                                riwNama
-                                                            }
-                                                            if(riwNama[i]==namaMenu[pilMakan]){
-                                                            }
-                                                        }
                                                     }
-                                                    jmlLap+=menuPesanan;
-                    //                                      pembelianMenu[pilMenu] += jmlPembelian;
+                                                    for(int i; i<=menuPesanan;i++){
+                                                        namaPesanan[i]="";
+                                                        hargaPesanan[i]=NULL;
+                                                        jmlPesanan[i]=NULL;
+                                                    }
+                                                    menuPesanan=0;
                                                     system("cls");
-                                                    //cout << "Pembelian "<<namaMenu[pilMakan]<< " sebanyak "<< jmlPembelian<<" dengan harga Rp. "<<hargaMenu[pilMakan]*jmlPembelian<< " Berhasil!"<<endl<<endl;
                                                     cout <<"Pembelian berhasil!"<<endl<<endl;
                                                     goto menuPembeli;
                                                     break;
+
                                                 case 'n':
                                                     system("cls");
                                                     cout <<"Konfirmasi dibatalkan!"<<endl<<endl;
