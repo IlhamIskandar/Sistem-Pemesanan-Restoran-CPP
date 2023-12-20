@@ -9,7 +9,7 @@ using namespace std;
         string konfirmasiExit;
 
         // variable Login pengelola
-        string username="1", password="1", menu, inputUsername, inputPassword;
+        string username="kelompok4", password="pemesananmakanan", menu, inputUsername, inputPassword;
         int loginCounter=0;
 
         //  variable Fitur Pengelola
@@ -50,32 +50,37 @@ using namespace std;
             cout <<endl;
 
             // PILIHAN MENU AWAL
-            switch (pilihan){
-                case 1:
+            switch (pilihan){ // switch pemilihan pada menu awal
+                case 1: // pilihan 1, masuke ke login pengelola
                     // Input Login Pengelola
                     system("cls");
-                    do{
+                    do{ // perulangan login, berulang ketika username dan password tdk sesuai
+                        // reset input username dan password ketika login
                         inputUsername="";
                         inputPassword="";
                         cout<<"Silahkan Login Sebagai Pengelola!"<<endl;
                         cout<<"Username :";
-                        cin>>inputUsername;
+                        getline(cin>>ws, inputUsername); // input username, getline & ws untuk membaca spasi dan lebih dari 1 kata
                         cout<<"Password :";
-                        cin>>inputPassword;
+                        getline(cin>>ws, inputPassword);
                         cout << endl;
 
+                        // kondisi ketika password atau username tidak sesuai
                         if (username!=inputUsername || password!=inputPassword){
                             cout<<"Username atau Password Salah! ["<<loginCounter+1<<"/3]"<<endl<<endl;
+                            // ketika login tidak sesuai, akan menambah login counter, ketika salah 3 kali, program kembali ke menu awal
                             loginCounter++;
                             if(loginCounter==3){
                                 system("cls");
                                 cout<<"Login gagal!"<<endl;
                                 cout << "Kembali ke Menu Awal"<<endl<<endl;
+                                loginCounter=0;
                                 goto menuAwal;
                             }
 
-                        }else {
+                        }else { // kondisi ketika login berhasil, ke
                             system("cls");
+                            loginCounter=0;
                             cout<<"Login Berhasil!"<<endl << endl;
                         }
                     }while (username!=inputUsername || password!=inputPassword);
@@ -83,7 +88,7 @@ using namespace std;
 
                     // Awal Menu Pengelola
                     menuPengelola:
-                    do{
+                    do{ // perulangan menu pengelola, berhenti ketika logout dikonfirmasi
                         cout<<"======= Menu Pengelola ========="<<endl;
                         cout<<"1.Tambah Menu Makanan (Maks."<<maxMenu<<", ["<<jmlMenu<<"/"<<maxMenu<<"])"<<endl;
                         cout<<"2.Ubah Nama/Harga Menu Makanan"<<endl;
@@ -92,7 +97,7 @@ using namespace std;
                         cout<<"5.Tampilkan Laporan Pembelian"<<endl;
                         cout<<"6.Log Out"<<endl;
                         cout<<"Masukan Pilihan : ";
-                        while(!(cin>>pilPengelola)){
+                        while(!(cin>>pilPengelola)){ // input & handling pilihan fitur menu pengelola
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(),'\n');
                             system("cls");
@@ -101,10 +106,10 @@ using namespace std;
                         }
 
                         cout<<endl;
-                        switch(pilPengelola){
-                            case 1:
+                        switch(pilPengelola){// switch pilihan fitur pengelolaan
+                            case 1: //pilihan 1 tambah menu makanan
                                 // Awal Fitur Tambah Menu Makanan
-                                if (jmlMenu==maxMenu){
+                                if (jmlMenu==maxMenu){ // kondisi ketika jumlah menu mencapai jumlah maksimal
                                     system("cls");
                                     cout <<"Jumlah Menu Sudah Maksimal ("<<jmlMenu<<"/"<<maxMenu<<")"<<endl;
                                     cout <<"Tidak Dapat Menambah Menu Lain!"<<endl<<endl;
@@ -113,7 +118,7 @@ using namespace std;
                                     cout << "Masukan jumlah menu yang akan ditambahkan"<<endl;
                                     cout << "Masukan 0 untuk membatalkan"<<endl;
                                     cout << "Jumlah : ";
-                                    while(!(cin>>jmlTambah) || jmlTambah < 0){
+                                    while(!(cin>>jmlTambah) || jmlTambah < 0){ // input & handling jumlah menu yang ditambahkan
                                         cin.clear();
                                         cin.ignore(numeric_limits<streamsize>::max(),'\n');
                                         system("cls");
@@ -122,13 +127,16 @@ using namespace std;
                                         goto menuPengelola;
                                     }
                                     cout <<endl;
-                                    if(jmlMenu+jmlTambah>maxMenu){
+                                    // kondisi ketika jumlah menu yang ditambahkan melebihi jumlah maksimal menu
+                                    if(jmlMenu+jmlTambah>maxMenu){ //
                                         system("cls");
                                         cout<<"Jumlah menu tidak boleh melebihi "<<maxMenu<<"! ("<<jmlMenu<<"/"<<maxMenu<<")"<<endl;
                                         cout<<"Tambah menu dibatalkan!"<<endl<<endl;
                                         break;
                                     }else{
+                                        // kondisi untuk cek jumlah menu
                                         if(jmlMenu==0){
+                                            // perulangan input nama & harga menu sesuai jumlah yang akan ditambahkan
                                             for(int i=1; i<=jmlTambah; i++){
                                                 cout << "Masukan Nama Menu : ";
                                                 getline(cin>>ws, namaMenu[i]);
@@ -142,6 +150,7 @@ using namespace std;
                                                 cout <<endl;
                                             }
                                         }else{
+                                            // perulangan input nama & harga menu sesuai jumlah yang akan ditambahkan
                                             for(int i=jmlMenu+1; i<=(jmlMenu+jmlTambah); i++){
                                                 cout << "Masukan Nama Menu : ";
                                                 getline(cin>>ws, namaMenu[i]);
@@ -181,7 +190,7 @@ using namespace std;
                                 system("cls");
                                 menuUbah:
                                 cout << "Jumlah Menu : ("<<jmlMenu<<"/"<<maxMenu<<")"<< endl;
-                                if(jmlMenu==0){
+                                if(jmlMenu==0){ // kondisi untuk cek jumlah daftar menu
                                     system("cls");
                                     cout << "Daftar Menu Makanan"<<endl;
                                     cout<<"Menu masih kosong!"<<endl<<endl;
@@ -191,7 +200,7 @@ using namespace std;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
-                                    for(int i=1; i<=jmlMenu; i++){
+                                    for(int i=1; i<=jmlMenu; i++){ // perulangan untuk menampilkan menu makanan
                                         cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
@@ -199,7 +208,7 @@ using namespace std;
                                     cout<<"Pilih nomor menu yang akan diubah"<<endl;
                                     cout<<"Pilih 0 untuk kembali"<<endl;
                                     cout<<"Pilihan : ";
-                                    while(!(cin>>pilUbah)){
+                                    while(!(cin>>pilUbah)){ //Input & handling pilih menu
                                         cin.clear();
                                         cin.ignore(numeric_limits<streamsize>::max(),'\n');
                                         cout <<endl<< "Pilihan tidak valid!" << endl <<endl;
@@ -207,25 +216,28 @@ using namespace std;
                                         cout <<"Pilihan : ";
                                     }
                                     cout<<endl;
-                                    if(pilUbah==0){
+                                    // cek input pilihan menu
+                                    if(pilUbah==0){ // pilihan 0, batalkan
                                         system("cls");
                                         cout<<"Ubah menu dibatalkan!"<<endl<<endl;
                                         goto menuPengelola;
-                                    }else if(pilUbah>jmlMenu || pilUbah<0){
+                                    }else if(pilUbah>jmlMenu || pilUbah<0){ // kondisi pilihan>jumlah menu, pilihan<0
                                         system("cls");
                                         cout<<"Menu tidak ditemukan!"<<endl<<endl;
                                         goto menuUbah;
                                     }else{
                                         int i;
+                                        // perulangan untuk mencari daftar menu yang dicari
                                         for(i=1; i<=jmlMenu; i++){
                                             if(pilUbah == i){
                                                 break;
                                             }
                                         }
+                                        // input nama & harga menu yang baru
                                         cout<<"Masukan Nama Baru : ";
                                         getline(cin>>ws, namaMenu[i]);
                                         cout<<"Masukan Harga Baru : ";
-                                        while(!(cin>>hargaMenu[i]) || hargaMenu[i]<0){
+                                        while(!(cin>>hargaMenu[i]) || hargaMenu[i]<0){ // input
                                             cin.clear();
                                             cin.ignore(numeric_limits<streamsize>::max(),'\n');
                                             cout << "Harga tidak valid!" << endl;
@@ -243,17 +255,17 @@ using namespace std;
                                 system("cls");
                                 menuHapus:
                                 cout << "Jumlah Menu : ("<<jmlMenu<<"/"<<maxMenu<<")"<< endl;
-                                if(jmlMenu==0){
+                                if(jmlMenu==0){ // cek jumlah daftar menu
                                     system("cls");
                                     cout << "Daftar Menu Makanan"<<endl;
                                     cout<<"Menu masih kosong!"<<endl<<endl;
-                                goto menuPengelola;
+                                    goto menuPengelola;
                                 }else{
                                     cout << "Daftar Menu Makanan"<<endl;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
-                                    for(int i=1; i<=jmlMenu; i++){
+                                    for(int i=1; i<=jmlMenu; i++){ // perulangan untuk menampilkan daftar menu makanan
                                         cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
@@ -261,29 +273,31 @@ using namespace std;
                                     cout<<"Pilih nomor menu yang akan dihapus"<<endl;
                                     cout<<"Pilih 0 untuk kembali"<<endl;
                                     cout<<"Pilihan : ";
-                                    while(!(cin>>pilHapus)){
+                                    while(!(cin>>pilHapus)){ // input & handling pilih menu
                                         cin.clear();
                                         cin.ignore(numeric_limits<streamsize>::max(),'\n');
                                         cout <<endl<< "Pilihan tidak valid!" << endl <<endl;
                                         cout<<"Pilih Ulang Menu"<<endl;
                                         cout <<"Pilihan : ";
                                     }
+                                    // cek input pilihan
                                     if(pilHapus==0){
                                         system("cls");
                                         cout<<"Hapus menu dibatalkan!"<<endl<<endl;
                                         goto menuPengelola;
-                                    }else if(pilHapus>jmlMenu || pilHapus<0){
+                                    }else if(pilHapus>jmlMenu || pilHapus<0){ //pilihan> jumlah menu atau pilihan<0
                                         system("cls");
                                         cout<<"Menu tidak ditemukan!"<<endl<<endl;
                                         goto menuHapus;
                                     }else{
                                         int i;
+                                        //perulangan untuk mencari menu yang dipilih
                                         for(i=1; i<=jmlMenu; i++){
                                             if(pilHapus == i){
                                                 break;
                                             }
                                         }
-
+                                        // menimpa menu yang dipilih (ke-i), dengan menu selanjutnya
                                         if(i<=jmlMenu){
                                             for(int j=i; j<jmlMenu; j++){
                                                 namaMenu[j]= namaMenu[j+1];
@@ -297,11 +311,11 @@ using namespace std;
                                 cout << "Berhasil menghapus data!"<<endl<<endl;
                                 goto menuHapus;
                                 break;
-                            case 4 : // tampilkan
+                            case 4 : // tampilkan menu makanan
                                 system("cls");
                                 menuTampilkan:
                                 cout << "Jumlah Menu : ("<<jmlMenu<<"/"<<maxMenu<<")"<< endl;
-
+                                // cek jumlah menu makanan
                                 if(jmlMenu==0){
                                     cout<<"Menu masih kosong!"<<endl;
                                 }else{
@@ -309,44 +323,44 @@ using namespace std;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                     cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
-                                    for(int i=1; i<=jmlMenu; i++){
+                                    for(int i=1; i<=jmlMenu; i++){ //perulangan untuk menampilkan menu makanan
                                         cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                     }
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
                                 }
                                 cout <<endl;
                                 break;
-                            case 5:// Laporan /riwayat pembelian
+                            case 5:// Laporan/riwayat pembelian
                                 system("cls");
                                 menuLaporan:
                                 totalKeuntungan=0;
-                                    if(jmlLap==0){
+                                    if(jmlLap==0){ //cek jumlah laporan
                                         system("cls");
                                         cout<<"Laporan masih Kosong!"<<endl<<endl;
                                         break;
                                     }else{
-                                        for(int i=0; i<jmlLap;i++){
+                                        for(int i=0; i<jmlLap;i++){ // Perulangan untuk menghitung jumlah keuntungan
                                             totalKeuntungan+=(lapHarga[i]*lapTotal[i]);
                                         }
                                         cout<<setw(16)<<""<<"- Laporan Pembelian -"<<endl;
                                         cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
                                         cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(12) << "Harga"<<"| "<< left << setw(10) << "Jumlah "<< endl;
                                         cout << setfill('-') << setw(60) << "" << setfill(' ') << endl;
-                                        for(int i=0;i<jmlLap;i++){
+                                        for(int i=0;i<jmlLap;i++){ // perulangan untuk menampilkan data pembelian
                                             cout<<" "<<left<< setw(3) << i+1<<"| "<<left<< setw(30)<< lapNama[i]<< "| Rp. "<<setw(8)<< lapHarga[i]<<"| "<<left<<setw(10)<<lapTotal[i]<<endl;
                                         }
                                         cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
-                                        cout <<" Total Keuntungan :"<<right<<setw(36)<<"Rp. "<< totalKeuntungan<<endl;
+                                        cout <<" Total Pemasukan :"<<right<<setw(36)<<"Rp. "<< totalKeuntungan<<endl;
                                         cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
                                     }
                                     cout<<endl;
 
                                 break;
-                            case 6:
+                            case 6: // logout
                                 char logout;
                                 cout <<"Yakin akan logout? (y/n)"<<endl;
                                 cout <<"Jawaban : ";
-                                if(!(cin>>logout)){
+                                if(!(cin>>logout)){ // input & handling konfirmasi logout
                                         cin.clear();
                                         cin.ignore(numeric_limits<char>::max(),'\n');
                                         system("cls");
@@ -356,7 +370,7 @@ using namespace std;
                                     }
 
                                 cout <<endl;
-                                switch(logout){
+                                switch(logout){ // switch untuk cek input logout
                                 case 'y':
                                     system("cls");
                                     cout << "Berhasil logout!"<< endl<<endl;
@@ -385,31 +399,31 @@ using namespace std;
 
                     // Akhir Menu Pengelola
                     break;
-                case 2:
+                case 2: // pilihan 2 menu awal. pembelian
                     // Awal Menu Pembelian
 
                     system("cls");
                     menuPembeli:
-                    do{
+                    do{ // perulangan menu pembelian
                         cout<<setw(17)<<""<<"> Menu Makanan <"<<endl;
                         cout << setfill('=') << setw(50) << "" << setfill(' ') << endl;
                         cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
                         cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
 
-                        if(jmlMenu==0){
+                        if(jmlMenu==0){ // cek jumlah menu makanan
 
-                            cout<<setw(16)<<""<<"Menu Masih Kosong!"<<setw(20)<<""<<endl;
+                        cout<<setw(16)<<""<<"Menu Masih Kosong!"<<setw(20)<<""<<endl;
                         }else{
-                            for(int i=1; i<=jmlMenu; i++){
+                            for(int i=1; i<=jmlMenu; i++){ // perulangan utnuk menampilkan menu makanan
                                 cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                             }
                         }
                         cout << setfill('=') << setw(50) << "" << setfill(' ') << endl<<endl;
-
+                        cout <<"Pilih Aksi"<<endl;
                         cout <<"1. Beli Makanan"<<endl;
                         cout <<"2. Kembali ke Menu Awal"<<endl;
                         cout <<"Pilihan :";
-                        if(!(cin>>pilPembeli)){
+                        if(!(cin>>pilPembeli)){ //input & handling pilihan menu
                             cin.clear();
                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
                             system("cls");
@@ -418,9 +432,9 @@ using namespace std;
                         }
 
                         cout<<endl;
-                        switch(pilPembeli){
-                        case 1:
-                            if(jmlMenu==0){
+                        switch(pilPembeli){ // switch menu pembeli
+                        case 1: //pemesanan makanan
+                            if(jmlMenu==0){ // cek jumlah menu makanan, jika 0 kembali ke menu sebelumnya
                                 system("cls");
                                 cout<<"Menu belum ditambahkan"<<endl;
                                 cout<<"Tidak dapat melakukan pembelian!"<<endl<<endl;
@@ -428,16 +442,15 @@ using namespace std;
                             }else{
                                 system("cls");
                                 awalPesan:
-                                do{
+                                do{ // perulangan pemesanan makanan
                                     cout<<setw(17)<<""<<"> Menu Makanan <"<<endl;
                                     cout << setfill('=') << setw(50) << "" << setfill(' ') << endl;
                                     cout <<" "<<left<<setw(3)<<"No"<<"| "<< left << setw(30) << "Nama Menu" <<"| "<< left << setw(10) << "Harga"<< endl;
                                     cout << setfill('-') << setw(50) << "" << setfill(' ') << endl;
-                                    if(jmlMenu==0){
-
+                                    if(jmlMenu==0){ // cek jumlah menu makanan
                                         cout<<setw(16)<<""<<"Menu Masih Kosong!"<<setw(20)<<""<<endl;
                                     }else{
-                                        for(int i=1; i<=jmlMenu; i++){
+                                        for(int i=1; i<=jmlMenu; i++){ // perulangan menampilkan
                                             cout<<" "<<left<< setw(3) << i<<"| "<<left<< setw(30)<< namaMenu[i]<< "| Rp. "<<hargaMenu[i]<<endl;
                                         }
                                     }
@@ -462,11 +475,12 @@ using namespace std;
                                         cout << setfill('=') << setw(60) << "" << setfill(' ') << endl;
                                     }
                                     cout<<endl;
+                                    cout<<"Pilih Aksi"<<endl;
                                     cout<<"1. Tambah Pesanan"<<endl;
                                     cout<<"2. Batalkan Pesanan"<<endl;
                                     cout<<"3. Konfirmasi Pesanan"<<endl;
                                     cout<<"Pilihan : ";
-                                    if(!(cin>>pilPesanan)){
+                                    if(!(cin>>pilPesanan)){ // imput & handling pilihan menu pemesanan
                                         cin.clear();
                                         cin.ignore(numeric_limits<streamsize>::max(),'\n');
                                         system("cls");
@@ -475,12 +489,12 @@ using namespace std;
                                     }
                                     cout<<endl;
 
-                                    switch(pilPesanan){
+                                    switch(pilPesanan){ // switch pilihan menu pemesanan
                                     case 1:// tambah pesanan
                                         cout<<"Pilih Nomor Menu Makanan"<<endl;
                                         cout<<"Pilih 0 untuk membatalkan"<<endl;
                                         cout<<"Pilihan : ";
-                                        while(!(cin>>pilMakan) || pilMakan<0 || pilMakan>jmlMenu){
+                                        while(!(cin>>pilMakan) || pilMakan<0 || pilMakan>jmlMenu){ // input & handling tambah pesanan
                                             cin.clear();
                                             cin.ignore(numeric_limits<streamsize>::max(), '\n');
                                             cout<<"Menu Tidak Ditemukan"<<endl<<endl;
@@ -488,14 +502,14 @@ using namespace std;
                                             cout<<"Pilih 0 untuk membatalkan"<<endl;
                                             cout<<"Pilihan : ";
                                         }
-                                        if(pilMakan==0){
+                                        if(pilMakan==0){ // input 0, batalkan tambah pesanan
                                             system("cls");
                                             cout<<"Tambah Pesanan dibatalkan!"<<endl<<endl;
                                             goto awalPesan;
                                         }else{
                                             cout <<"Masukan Jumlah Pembelian"<<endl;
                                             cout << "Jumlah : ";
-                                            while(!(cin>>jmlPembelian) || jmlPembelian < 0){
+                                            while(!(cin>>jmlPembelian) || jmlPembelian < 0){ //input & handling jumlah pembelian
                                                 cin.clear();
                                                 cin.ignore(numeric_limits<streamsize>::max(),'\n');
                                                 cout << "Jumlah tidak valid!" << endl<<endl;
@@ -503,7 +517,8 @@ using namespace std;
                                                 cout << "Jumlah : ";
                                             }
                                             // int jmlPesanan[maxMenu], namaPesanan[maxMenu], hargaPesanan[maxMenu], menuPesanan;
-                                            if(menuPesanan==0){
+                                            if(menuPesanan==0){ // cek jumlah daftar pesanan
+                                                // tambah ke daftar pesanan
                                                 namaPesanan[menuPesanan]=namaMenu[pilMakan];
                                                 hargaPesanan[menuPesanan]=hargaMenu[pilMakan];
                                                 jmlPesanan[menuPesanan]=jmlPembelian;
@@ -512,7 +527,9 @@ using namespace std;
 
                                             }else{
                                                 int i;
-                                                for( i=0;i<menuPesanan;i++){
+                                                for( i=0;i<menuPesanan;i++){ // cek menu yang ditambahakan
+                                                    // jika menu yng ditambahkan ada di daftar menu
+                                                    // menambahkan jumlah pembelian
                                                     if(namaPesanan[i]==namaMenu[pilMakan] && hargaPesanan[i]==hargaMenu[pilMakan]){
                                                         jmlPesanan[i]+=jmlPembelian;
                                                         //totalHarga+=(hargaPesanan[i]*jmlPembelian);
@@ -520,6 +537,8 @@ using namespace std;
                                                     }
                                                 }
                                                 if(i==menuPesanan){
+                                                    // jika menu yng ditambahkan tidak ada di daftar menu
+                                                    // menambahkan daftar pembelian baru
                                                     namaPesanan[menuPesanan]=namaMenu[pilMakan];
                                                     hargaPesanan[menuPesanan]=hargaMenu[pilMakan];
                                                     jmlPesanan[menuPesanan]=jmlPembelian;
@@ -547,7 +566,7 @@ using namespace std;
                                         }
                                         switch(konfBatal){
                                         case 'y':
-                                            for(int i; i<=menuPesanan;i++){
+                                            for(int i; i<=menuPesanan;i++){ // mengosongkan daftar pesanan
                                                 namaPesanan[i]="";
                                                 hargaPesanan[i]=NULL;
                                                 jmlPesanan[i]=NULL;
@@ -594,6 +613,7 @@ using namespace std;
 
                                             switch(konf){
                                                 case 'y':
+                                                    // kondisi input pemesanan ke laporan pembelian
                                                     if (jmlLap==0){
                                                         for(int i=0; i<menuPesanan;i++){
                                                             lapNama[i]=namaPesanan[i];
